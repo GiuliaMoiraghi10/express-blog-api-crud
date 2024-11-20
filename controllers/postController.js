@@ -1,4 +1,4 @@
-const posts = require('../data/posts')
+const posts = require('../data/posts.js')
 
 function index(req, res) {
     res.send('Lista dei post')
@@ -28,4 +28,4 @@ function destroy(req, res) {
     res.send(`Elimina post con id ${id}`)
 }
 
-module.exports = { index, show, store, update, destroy }
+module.exports = { index, show, store, update, modify, destroy }
