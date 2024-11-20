@@ -40,21 +40,18 @@ function modify(req, res) {
 function destroy(req, res) {
     const id = parseInt(req.params.id)
     // res.send(`Elimina post con id ${id}`)
-    const post = posts.findIndex(post => post.id === id)
+    const postIndex = posts.findIndex(post => post.id === id)
 
-    if (!post) {
+    if (postIndex === -1) {
         res.status(404)
 
         return res.json({
-            status: 404,
             error: 'Not Found',
             message: 'Post non trovato'
         })
     }
 
-    posts.splice(posts.indexOf(post), 1)
-
-    console.log(posts)
+    posts.splice(postIndex, 1)
 
     res.sendStatus(204)
 
