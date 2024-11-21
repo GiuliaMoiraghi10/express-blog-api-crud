@@ -67,6 +67,9 @@ function update(req, res) {
     // uso metodo find per trovare il post da modificare
     const post = posts.find(post => post.id === id)
 
+    // creo variabile in cui recupero gli elementi da cambiare
+    const { title, slug, content, image, tags } = req.body
+
     // gestisco errore
     if (!post) {
 
@@ -79,14 +82,14 @@ function update(req, res) {
     }
 
     // aggiorno il post
-    post.title = req.body.title,
-        post.slug = req.body.slug,
-        post.content = req.body.content,
-        post.image = req.body.image,
-        post.tags = req.body.tags,
+    post.title = title,
+        post.slug = slug,
+        post.content = content,
+        post.image = image,
+        post.tags = tags
 
-        // controllo
-        console.log(posts)
+    // controllo
+    console.log(posts)
 
     // restituisco post aggiornato
     res.json(post)
