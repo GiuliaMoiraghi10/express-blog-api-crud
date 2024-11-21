@@ -24,7 +24,36 @@ function show(req, res) {
 }
 
 function store(req, res) {
-    res.send('Crea nuovo post')
+    // res.send('Crea nuovo post')
+
+    //request body
+    console.log(req.body)
+    res.send(req.body)
+
+    //creo nuovo id per nuovo elemento aggiunto
+    const newId = posts(posts.length - 1).id + 1
+
+    //creo nuovo elemento con dati presi da json postman
+    const newPost = {
+        id: newId,
+        title: req.body.title,
+        slug: req.body.slug,
+        content: req.body.content,
+        image: req.body.image,
+        tag: req.body.tag,
+    }
+
+    //controllo
+    console.log(posts)
+
+    //pusho array nuovo in post.js
+    posts.push(newPost)
+
+    //imposto status corretto
+    res.status(201).send(newPost)
+
+    //restituisco nuovo elemento in json
+    res.json(newPost)
 }
 
 function update(req, res) {

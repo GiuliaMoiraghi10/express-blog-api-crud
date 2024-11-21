@@ -8,8 +8,13 @@ const postsRouter = require('./routers/postsRouter.js')
 
 app.use(express.static('public'))
 
+//aggiungo "codice" per far funzionare la lettura del body
+app.use(express.json())
+
 app.get('/', (req, res) => {
     res.send('Prima porta')
+    //aggiungo console.log per poter visualizzare il body
+    console.log(req.body)
 })
 
 app.use('/posts', postsRouter)
