@@ -1,4 +1,6 @@
 const posts = require('../data/posts.js')
+//creo variabile per prendere ultimo id creato
+let lastIndex = posts.at(-1).id
 
 function index(req, res) {
     // res.send('Lista dei post')
@@ -31,29 +33,30 @@ function store(req, res) {
     res.send(req.body)
 
     //creo nuovo id per nuovo elemento aggiunto
-    const newId = posts(posts.length - 1).id + 1
+    // const newId = posts(posts.length - 1).id + 1
+    lastIndex++
 
     //creo nuovo elemento con dati presi da json postman
-    const newPost = {
-        id: newId,
+    const post = {
+        id: lastIndex,
         title: req.body.title,
         slug: req.body.slug,
         content: req.body.content,
         image: req.body.image,
-        tag: req.body.tag,
+        tags: req.body.tags
     }
 
-    //controllo
-    console.log(posts)
+    console.log(post)
 
-    //pusho array nuovo in post.js
-    posts.push(newPost)
+    //pusho nuovo post
+    posts.push(post)
 
-    //imposto status corretto
-    res.status(201).send(newPost)
+    //imposto status
+    res.status(201).send(post)
 
     //restituisco nuovo elemento in json
-    res.json(newPost)
+    res.json(post)
+
 }
 
 function update(req, res) {
