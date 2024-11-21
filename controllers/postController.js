@@ -60,8 +60,36 @@ function store(req, res) {
 }
 
 function update(req, res) {
+    // recupero id post da modificare
     const id = parseInt(req.params.id)
-    res.send(`Modifica post con id ${id}`)
+    // res.send(`Modifica post con id ${id}`)
+
+    // uso metodo find per trovare il post da modificare
+    const post = posts.find(post => post.id === id)
+
+    // gestisco errore
+    if (!post) {
+
+        res.status(404)
+
+        return res.json({
+            error: 'Not found',
+            message: 'Post non trovato'
+        })
+    }
+
+    // aggiorno il post
+    post.title = req.body.title,
+        post.slug = req.body.slug,
+        post.content = req.body.content,
+        post.image = req.body.image,
+        post.tags = req.body.tags,
+
+        // controllo
+        console.log(posts)
+
+    // restituisco post aggiornato
+    res.json(post)
 }
 
 function modify(req, res) {
