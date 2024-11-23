@@ -5,6 +5,8 @@ const app = express()
 const port = 3000
 
 const postsRouter = require('./routers/postsRouter.js')
+const errorsHandler = require('./middlewares/errorsHandler.js')
+const notFound = require('./middlewares/notFound.js')
 
 app.use(express.static('public'))
 
@@ -19,6 +21,9 @@ app.get('/', (req, res) => {
 
 app.use('/posts', postsRouter)
 
+// gestione errore
+app.use(errorsHandler)
+app.use(notFound)
 
 app.listen(port, () => {
     console.log(`Server listenig on port ${port}`)

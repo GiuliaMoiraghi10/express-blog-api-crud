@@ -3,6 +3,8 @@ const router = express.Router()
 
 const postController = require('../controllers/postController.js')
 
+const errorsHandler = require('../middlewares/errorsHandler.js')
+
 
 //index
 router.get('/', postController.index)

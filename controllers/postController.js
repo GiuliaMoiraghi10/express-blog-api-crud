@@ -1,9 +1,21 @@
 const posts = require('../data/posts.js')
 //creo variabile per prendere ultimo id creato
-let lastIndex = posts.at(-1).id
+let lastId = posts.at(-1).id
 
 function index(req, res) {
     // res.send('Lista dei post')
+
+    // filtro i posts con il valore tag che viene passato in query string
+
+    let filteredPosts = posts
+
+    if (req.query.tags) {
+        const queryTags = req.query.tags.toLowerCase()  // metto il valore in minuscolo
+        filteredPosts = filteredPosts.filter(post =>    // controllo se tag è presente
+            post.tags.some(tag => queryTags.includes(tag.toLowerCase()))
+        )
+    }
+
     res.json(posts)
 }
 
@@ -34,11 +46,11 @@ function store(req, res) {
 
     //creo nuovo id per nuovo elemento aggiunto
     // const newId = posts(posts.length - 1).id + 1
-    lastIndex++
+    lastId++
 
     //creo nuovo elemento con dati presi da json postman
     const post = {
-        id: lastIndex,
+        id: lastId,
         title: req.body.title,
         slug: req.body.slug,
         content: req.body.content,
@@ -97,7 +109,20 @@ function update(req, res) {
 
 function modify(req, res) {
     const id = parseInt(req.params.id)
-    res.send(`Modifica parte del post con id ${id}`)
+    // res.send(`Modifica parte del post con id ${id}`)
+
+    const post = posts.find(post => post.id === id)
+
+    const { title, slug, content, image, tags } = req.body
+
+    if (title) post.title = title
+    if (slug) post.slug = slug
+    if (content) post.content = content
+    if (image) post.image = image
+    if (tags) post.tags = tags
+
+    res.json(post)
+
 }
 
 function destroy(req, res) {
